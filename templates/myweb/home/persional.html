@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ blog.title }}</title>
+    <link rel="stylesheet" href="/static/myweb/bootstrap/css/bootstrap.css">
+    <script src="/static/myweb/bootstrap/js/jquery.js"></script>
+    <script src="/static/myweb/bootstrap/js/bootstrap.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'myweb_home' %}">首页</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <h2 style="text-align: center">{{ blog.title }}</h2>
+        </div>
+    </div><!-- /.container-fluid -->
+    <HR width=100% color=#987cb9 SIZE=1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="list-group">
+                    <li class="list-group-item active">
+                        {{ blog.title }}
+                    </li>
+                    <a href="{% url 'myweb_home_persional' blog.webuser.id %}" class="list-group-item"><span
+                            style="font-size: large;font-weight: bold;text-align: center">{{ blog.webuser.nickname }}的文章</span></a>
+                    <a href="{% url 'myweb_home_collection' blog.webuser.id %}" class="list-group-item"><span
+                            style="font-size: large;font-weight: bold;text-align: center">{{ blog.webuser.nickname }}的收藏</span></a>
+                </div>
+                <div class="panel panel-default">
+                    <!-- Default panel contents -->
+                    <div class="panel-heading" style="font-size: larger">个人简介</div>
+                    <div class="panel-body">
+                        <p style="font-weight: bold">{{ info.info }}</p>
+                    </div>
+                    <!-- List group -->
+                    <ul class="list-group" style="font-size: larger">
+                        <li class="list-group-item">星座: <span style="font-weight: bold">{{ info.star }}</span></li>
+                        <li class="list-group-item">生日：<span
+                                style="font-weight: bold">{{ info.birth|date:'Y-m-d' }}</span></li>
+                        <li class="list-group-item">兴趣：<span style="font-weight: bold">{{ info.habit }}</span></li>
+                        <li class="list-group-item">学校：<span style="font-weight: bold">{{ info.school }}</span></li>
+                        <li class="list-group-item">地址：<span style="font-weight: bold">{{ info.location }}</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                {% for article in alist %}
+                    <div style="margin-bottom: 40px">
+                        <h4><a href="{% url 'myweb_home_article' article.id %}">{{ article.name }}</a></h4>
+                        <div class="media">
+                            <div class="media-left media-middle">
+                                <a href="#">
+                                    <img class="img-circle"
+                                         src="/static/uploads/webuser/{{ article.blog.webuser.head }}" height="60px"
+                                         width="60px">
+                                </a>
+                            </div>
+                            <div class="media-body" style="width: 800px;height: auto;font-weight: bold;font-size: 15px">
+                                {{ article.main }}
+                                {% if blog.webuser.id == request.session.webuser.id %}
+                                    <a class="del" type="submit" article_del="{{ article.id }}"><button class="pull-right" style="color: red">删除&nbsp;&nbsp;</button></a>
+                                {% endif %}
+                                <a href="{% url 'myweb_home_article' article.id %}"><span
+                                        style="text-align: end">【查看全文】</span></a>
+                            </div>
+                            <span>作者：<a href="">{{ article.blog.webuser.nickname }}</a></span>
+                            <span> 发布于：{{ article.publish_at|date:'Y-m-d H-i-s' }} </span>&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-comment">评论({{ article.commit_set.count }}) </span>&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-hand-right">点赞:({{ article.up_num }})  </span>&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-heart">收藏：({{ article.down_num }})</span>
+                        </div>
+                    </div>
+                    <HR height="5px" width="80%" color=#987cb9 SIZE=3>
+                {% endfor %}
+            </div>
+
+        </div>
+    </div>
+</nav>
+<script>
+    $(".del").click(function () {
+            var article_id = $(this).attr('article_del')
+            $.ajax({
+                url:'/article_del',
+                type:'post',
+                data:{article_id:article_id,csrfmiddlewaretoken: '{{ csrf_token }}'},
+                success:function (data){
+                    console.log(data)
+                }
+            })
+        })
+</script>
+</body>
+</html>

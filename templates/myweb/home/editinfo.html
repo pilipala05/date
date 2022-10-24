@@ -1,0 +1,75 @@
+{% extends 'myweb/home/base.html' %}
+{% load static %}
+
+<!-- 个人信息修改页面 -->
+{% block content %}
+    <!-- 顶部标题 -->
+    <nav class="navbar navbar-inverse">
+        <h4 style="text-align: center;color: ghostwhite">个人简介</h4>
+    </nav>
+    <!-- 左侧导航栏 -->
+    <div class="col-lg-2">
+        <div class="list-group">
+            <a href="{% url 'myweb_home_edit' %}" class="list-group-item" style="text-align: center;font-weight: bold">账号信息</a>
+            <a href="{% url 'myweb_home_editinfo' %}" class="list-group-item active" style="text-align: center;font-weight: bold">个人简介</a>
+        </div>
+    </div>
+    <!-- 右侧信息 -->
+    <div class="col-lg-5">
+        <form class="form-horizontal" action="{% url 'myweb_home_updateinfo' request.session.webuser.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-lg-6 control-label">个人简介：</label>
+                    <div class="col-lg-6">
+                        <input type="text" name="info" class="username" placeholder="简介">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-lg-6 control-label">星座：</label>
+                    <div class="col-lg-6">
+                        <input type="text" name="star" class="username"
+                               placeholder="星座">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-lg-6 control-label">生日：</label>
+                    <div class="col-lg-6">
+                        <input type="datetime-local" name="birth" class="date"
+                               placeholder="生日">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-lg-6 control-label">爱好：</label>
+                    <div class="col-lg-6">
+                        <input type="text" name="habit" class="username"
+                               placeholder="爱好">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-lg-6 control-label">学校：</label>
+                    <div class="col-lg-6">
+                        <input type="text" name="school" class="username"
+                               placeholder="学校">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-lg-6 control-label">地址：</label>
+                    <div class="col-lg-6">
+                        <input type="text" name="location" class="username"
+                               placeholder="地址">
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <f class="box-footer">
+                <div class="col-sm-offset-6 col-sm-10">
+                    <button type="submit" class="btn btn-primary">提交</button> &nbsp;
+                    <button type="reset" class="btn btn-default">重置</button>
+                    <div class="col-sm-offset-2 col-sm-10">
+                    </div>
+                </div>
+            </f>
+        </form>
+    </div>
+{% endblock %}

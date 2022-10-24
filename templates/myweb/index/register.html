@@ -1,0 +1,149 @@
+{% load static %}
+<!DOCTYPE html>
+ <html lang="en">
+
+ <head>
+     <meta charset="UTF-8">
+     <title>register</title>
+     <script src="{% static 'myadmin/local/js/html5shiv.min.js'%}"></script>
+     <script src="{% static 'myadmin/local/js/respond.min.js'%}"></script>
+     <style>
+         * {
+             margin: 0;
+             padding: 0;
+         }
+
+         html {
+             height: 100%;
+             width: 100%;
+             overflow: hidden;
+             margin: 0;
+             padding: 0;
+             background: url('/static/banckground/bgm1.jpg') no-repeat 1px 1px;
+             background-repeat: no-repeat;
+             background-size: 100% 100%;
+             -moz-background-size: 100% 100%;
+         }
+
+         body {
+             display: flex;
+             align-items: center;
+             justify-content: center;
+             height: 100%;
+         }
+
+         #loginDiv {
+             width: 37%;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             height: 650px;
+             background-color: rgba(75, 81, 95, 0.3);
+             box-shadow: 7px 7px 17px rgba(52, 56, 66, 0.5);
+             border-radius: 5px;
+         }
+
+         #name_trip {
+             margin-left: 50px;
+             color: red;
+         }
+
+         p,
+         .sexDiv {
+             margin-top: 10px;
+             margin-left: 20px;
+             color: azure;
+         }
+
+         .sexDiv>input,
+         .hobby>input {
+             width: 30px;
+             height: 17px;
+         }
+
+         input,
+         select {
+             margin-left: 15px;
+             border-radius: 5px;
+             border-style: hidden;
+             height: 30px;
+             width: 140px;
+             background-color: rgba(216, 191, 216, 0.5);
+             outline: none;
+             color: #f0edf3;
+             padding-left: 10px;
+         }
+
+         .button {
+             border-color: cornsilk;
+             background-color: rgba(100, 149, 237, .7);
+             color: aliceblue;
+             border-style: hidden;
+             border-radius: 5px;
+             width: 100px;
+             height: 31px;
+             font-size: 16px;
+         }
+
+         .introduce {
+             margin-left: 110px;
+         }
+
+         .introduce>textarea {
+             background-color: rgba(216, 191, 216, 0.5);
+             border-style: hidden;
+             outline: none;
+             border-radius: 5px;
+         }
+
+         h1 {
+             text-align: center;
+             margin-bottom: 20px;
+             margin-top: 20px;
+             color: #f0edf3;
+         }
+
+         b {
+             margin-left: 50px;
+             color: #FFEB3B;
+             font-size: 10px;
+             font-weight: initial;
+         }
+     </style>
+ </head>
+
+ <body>
+     <div id="loginDiv">
+         <form action="{% url 'myweb_index_insert' %}" method="post" enctype="multipart/form-data">
+             {% csrf_token %}
+             <h1>注册用户</h1>
+             <p>用户昵称:<input type="text" name ="nickname" id="inputText1"
+                                           placeholder="用户昵称"/>
+
+             <p>用户手机:<input name ="mobile" type="text" id="inputText2"
+                                           placeholder="用户手机" />
+             
+             <p>用户邮箱:<input name="email" type="text" id="inputText3"
+                                           placeholder="email"/>
+
+             <p>用户密码:<input name="pass" type="password" id="inputText4"
+                                           placeholder="用户密码"/>
+             <div class="form-group">
+             <p>头像：<input type="file" name="picture" id="id_picture"></p>
+             </div>
+             <p style="text-align: center;">
+                 <button type="submit" class="button">提交</button>
+                 <button type="reset" class="button">重置</button>
+             </p>
+         </form>
+     </div>
+<script src="{% static 'myadmin/bower_components/jquery/dist/jquery.min.js'%}"></script>
+<!-- Bootstrap 3.3.7 -->
+<script src="{% static 'myadmin/bower_components/bootstrap/dist/js/bootstrap.min.js'%}"></script>
+<!-- AdminLTE App -->
+<script src="{% static 'myadmin/dist/js/adminlte.min.js'%}"></script>
+
+<script src="{% static 'myadmin/dist/js/edu-modal-alert-confirm.js'%}"></script>
+ </body>
+
+ </html>

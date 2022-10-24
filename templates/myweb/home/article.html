@@ -1,0 +1,133 @@
+{% extends 'myweb/home/base.html' %}
+{% block content %}
+    <div>
+        <div>
+            <h1>{{ article.name }}</h1>
+        </div>
+        <div>
+            <img class="media-object"
+                 src="/static/uploads/article/{{ article.picture }}" width="900">
+        </div>
+        <div><h4>{{ article.message }}</h4></div>
+        <div>
+            <span>作者：{{ article.blog.webuser.nickname }}</span>
+            <span>发布于：{{ article.publish_at|date:'Y-m-d H-i-s' }}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+            <span class="glyphicon glyphicon-comment">评论({{ article.commit_set.count }})</span>&nbsp;&nbsp;
+            <span><button class="glyphicon glyphicon-hand-right aup"></button>点赞：({{ article.up_num }})</span>&nbsp;&nbsp;
+            <span><button class="glyphicon glyphicon-heart a_collect"></button>收藏：({{ article.down_num }})</span>
+        </div>
+        <!-- 评论模块 -->
+        <p></p>
+        <div>
+            <!-- 评论列表 -->
+            <p style="font-weight:bold">评论列表</p>
+        <ul class="list-group">
+            {% for vo in commit_list %}
+                <li class="list-group-item" style="width: 800px;height: auto">
+                    <div class="media-left media-middle">
+                        <a href="#">
+                            <img class="img-circle"
+                                 src="/static/uploads/webuser/{{ vo.webuser.head }}" alt="头像" width="50px" height="50px">
+                            <span>{{ vo.webuser.nickname }}:</span>
+                        </a>
+                    </div>
+                    <div class="media-body">
+                        {% if vo.parent %}
+                            <p class="well-sm">@{{ vo.webuser.nickname }}:{{ vo.parent.content }}</p>
+                        {% endif %}
+                        {{ vo.content }}
+                        <span class="pull-right" style="font-size: smaller">时间：{{ vo.publish_at|date:"Y-m-d H-s" }}</span>
+                        <a><span class="pull-right reply" username="{{ vo.webuser.nickname }}" commit_id="{{ vo.nid }}">回复&nbsp;&nbsp;</span></a>
+                        {% if vo.webuser_id == request.session.webuser.id %}
+                            <a class="del" type="submit" del_id="{{ vo.nid }}"><span class="pull-right">删除&nbsp;&nbsp;</span></a>
+                        {% endif %}
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        </div>
+        <div>
+            <!--发表评论-->
+            <p style="font-weight: bold">发表评论</p>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="input-group" style="width: 800px">
+                        <input type="text" class="form-control" id="id_content" style="height: 50px" placeholder="在此发布评论">
+                        <span class="input-group-btn">
+                                <button class="btn btn-default" id="btn_submit" style="height: 50px" type="button">提交</button>
+                        </span>
+                    </div><!-- /input-group -->
+                </div><!-- /.col-lg-6 -->
+            </div><!-- /.row -->
+        </div>
+        <div>
+
+        </div>
+
+    </div>
+    <script>
+    var parent_id=''
+        //删除评论
+        $(".del").click(function () {
+            var del_id = $(this).attr('del_id')
+            $.ajax({
+                url:'/del_commit',
+                type:'post',
+                data:{del_id:del_id,csrfmiddlewaretoken: '{{ csrf_token }}'},
+                success:function (data){
+                    $("#id_content").val("")
+                }
+            })
+        })
+        //回复
+        $(".reply").click(function (){
+            var username=$(this).attr('username')
+            parent_id=$(this).attr('commit_id')
+            $("#id_content").focus()
+            $("#id_content").val('@'+username+'  ')
+        })
+        //评论
+        $("#btn_submit").click(function (){
+            var content=$("#id_content").val()
+            if(parent_id){
+                var index=content.indexOf(' ')+1
+                content=content.slice(index)
+            }
+            $.ajax({
+                url:'/commit',
+                type:'post',
+                data:{article_id:'{{ article.id }}',content:content,webuser_id:'{{ request.session.webuser.id }}',csrfmiddlewaretoken: '{{ csrf_token }}',parent_id:parent_id},
+                success:function (data){
+                    $("#id_content").val("")
+                }
+            })
+        })
+        //点赞数据传输
+        $(".aup").click(function (){
+            var up_num=1
+            //alert(up_num)
+            $.ajax({
+                url:'/aup',
+                type:'post',
+                data:{article_id: '{{article.id}}',up_num:up_num,webuser_id:'{{ request.session.webuser.id }}',csrfmiddlewaretoken: '{{ csrf_token }}'},
+                success:function (data){
+                    console.log(data)
+                }
+            })
+        })
+        //收藏数据
+        $(".a_collect").click(function (){
+            var up_num=1
+            //alert(up_num)
+            $.ajax({
+                url:'/collect',
+                type:'post',
+                data:{article_id: '{{article.id}}',up_num:up_num,webuser_id:'{{ request.session.webuser.id }}',csrfmiddlewaretoken: '{{ csrf_token }}'},
+                success:function (data){
+                    console.log(data)
+                }
+            })
+        })
+
+    </script>
+{% endblock %}

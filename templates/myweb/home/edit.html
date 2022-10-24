@@ -1,0 +1,84 @@
+{% extends 'myweb/home/base.html' %}
+{% load static %}
+
+<!-- 个人信息修改页面 -->
+{% block content %}
+    <!-- 顶部标题 -->
+    <nav class="navbar navbar-inverse">
+        <h4 style="text-align: center;color: ghostwhite">个人信息</h4>
+    </nav>
+    <!-- 左侧导航栏 -->
+    <div class="col-lg-2">
+        <div class="list-group">
+            <a href="{% url 'myweb_home_edit' %}" class="list-group-item active" style="text-align: center;font-weight: bold">账号信息</a>
+            <a href="{% url 'myweb_home_editinfo' %}" class="list-group-item" style="text-align: center;font-weight: bold">个人简介</a>
+        </div>
+    </div>
+    <!-- 右侧信息 -->
+    <div class="col-lg-5">
+        <form class="form-horizontal" action="{% url 'myweb_home_update' request.session.webuser.id %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="box-body">
+                <div class="form-group">
+                    <label for="id_head" class="col-lg-6 control-label">头像：</label>
+                    <img class="img-circle"
+                         src="/static/uploads/webuser/{{ request.session.webuser.head }}" alt="头像" height="40px"
+                         width="40px">
+                    <div class="col-lg-6">
+                        <input type="file" name="head" id="id_head" style="display:none">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-lg-6 control-label">昵称：</label>
+                    <div class="col-lg-6">
+                        <input type="text" name="nickname" value="{{ request.session.webuser.nickname }}" class="username"
+                               placeholder="用户名">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-lg-6 control-label">用户账号：</label>
+                    <div class="col-lg-6">
+                        <input type="email" name="email" value="{{ request.session.abuser.email }}" class="username"
+                               placeholder="用户账号">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-lg-6 control-label">密码：</label>
+                    <div class="col-lg-6">
+                        <input type="password" name="password" value="{{ request.session.webuser.password }}" class="username"
+                               placeholder="账号密码">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-lg-6 control-label">手机号：</label>
+                    <div class="col-lg-6">
+                        <input type="text" name="mobile" value="{{ request.session.webuser.mobile }}" class="username"
+                               placeholder="手机号">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-lg-6 control-label">添加时间：</label>
+                    <div class="col-lg-6">
+                        {{ request.session.webuser.create_at|date:'Y-m-d H-i-s' }}
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputEmail3" class="col-lg-6 control-label">论坛名：</label>
+                    <div class="col-lg-6">
+                        <input type="text" name="blog" value="{{ request.session.webuser.blog.title }}" class="username"
+                               placeholder="用户账号">
+                    </div>
+                </div>
+            </div>
+            <!-- /.box-body -->
+            <f class="box-footer">
+                <div class="col-sm-offset-6 col-sm-10">
+                    <button type="submit" class="btn btn-primary">提交</button> &nbsp;
+                    <button type="reset" class="btn btn-default">重置</button>
+                    <div class="col-sm-offset-2 col-sm-10">
+                    </div>
+                </div>
+            </f>
+        </form>
+    </div>
+{% endblock %}

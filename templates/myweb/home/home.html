@@ -1,0 +1,163 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="/static/myweb/bootstrap/css/bootstrap.css">
+    <script src="/static/myweb/bootstrap/js/jquery.js"></script>
+    <script src="/static/myweb/bootstrap/js/bootstrap.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% url 'myweb_home' %}">首页</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="#">文章 <span class="sr-only">(current)</span></a></li>
+                <li><a href="{% url 'myweb_home_persional' request.session.webuser.id %}">个人主页</a></li>
+                <li><a href="{% url 'myweb_home_addarticle' %}">写文章</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">分类 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'myweb_home_cat' 1 %}">运动</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% url 'myweb_home_cat' 5 %}">摄影</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% url 'myweb_home_cat' 2 %}">影视</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% url 'myweb_home_cat' 3 %}">音乐</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% url 'myweb_home_cat' 6 %}">书籍</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% url 'myweb_home_cat' 7 %}">游戏</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" name="keyword" class="form-control" placeholder="搜索文章">
+                </div>
+                <button type="submit" class="btn btn-default">提交</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <div class="media-middle">
+                        <img class="img-circle"
+                             src="/static/uploads/webuser/{{ request.session.webuser.head }}" alt="头像" height="40px" width="40px">
+                    </div>
+                </li>
+                <li><a href="{% url 'myweb_home_persional' request.session.webuser.id %}">{{ request.session.webuser.nickname }}</a></li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">更多操作 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="{% url 'myweb_home_edit' %}">修改信息</a></li>
+                        <li><a href="{% url 'myweb_index_logout' %}">退出</a></li>
+
+                    </ul>
+                </li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+<HR width="100%" color=#987cb9 SIZE=3>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-2">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">运动类</div>
+                    <div class="panel-body">
+                        <a href="{% url 'myweb_home_cat' 1 %}">这里运动类的交友论坛</a>
+                    </div>
+                </div>
+                <HR width="100%" color=#987cb9 SIZE=2>
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">摄影</h3>
+                    </div>
+                    <div class="panel-body">
+                        <a href="{% url 'myweb_home_cat' 5 %}">这里是摄影类的交友论坛</a>
+                    </div>
+                </div>
+                <HR width="100%" color=#987cb9 SIZE=2>
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">影视</h3>
+                    </div>
+                    <div class="panel-body">
+                        <a href="{% url 'myweb_home_cat' 2 %}">这里是影视类的交友论坛</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                {% for article in articlelist %}
+                    <div style="margin-bottom: 40px">
+                        <h4><a href="{% url 'myweb_home_article' article.id %}">{{ article.name }}</a></h4>
+                        <div class="media">
+                            <div class="media-left media-middle">
+                                <a href="#">
+                                    <img class="img-circle"
+                                         src="/static/uploads/webuser/{{ article.blog.webuser.head }}" height="60px" width="60px">
+                                </a>
+                            </div>
+                            <div class="media-body" style="width: 800px;height: auto;font-weight: bold;font-size: 15px">
+                                {{ article.main }}
+                                <a href="{% url 'myweb_home_article' article.id %}"><span style="text-align: end">【查看全文】</span></a>
+                            </div>
+                            <span>作者：<a href="{% url 'myweb_home_persional' article.blog.webuser.id %}">{{ article.blog.webuser.nickname }}</a></span>
+                            <span> 发布于：{{ article.publish_at|date:'Y-m-d H-i-s' }} </span>&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-comment">评论({{ article.commit_set.count }}) </span>&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-hand-right">点赞:({{ article.up_num }})  </span>&nbsp;&nbsp;
+                            <span class="glyphicon glyphicon-heart">收藏：({{ article.down_num }})</span>
+                        </div>
+                    </div>
+                    <HR height="5px" width="80%" color=#987cb9 SIZE=3>
+                {% endfor %}
+            </div>
+            <div class="col-lg-3">
+                <div class="panel panel-warning" href="#">
+                    <div class="panel-heading">音乐</div>
+                    <div class="panel-body">
+                        <a href="{% url 'myweb_home_cat' 3 %}">这里是音乐类交友论坛</a>
+                    </div>
+                </div>
+                <HR width="100%" color=#987cb9 SIZE=2>
+                <div class="panel panel-warning">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">书籍</h3>
+                    </div>
+                    <div class="panel-body">
+                        <a href="{% url 'myweb_home_cat' 6 %}">这里是书籍类交友论坛</a>
+                    </div>
+                </div>
+                <HR width="100%" color=#987cb9 SIZE=2>
+                <div class="panel panel-warning" href="#">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">游戏</h3>
+                    </div>
+                    <div class="panel-body">
+                        <a href="{% url 'myweb_home_cat' 7 %}">这里是游戏类交友论坛</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>
+</div>
+<footer>
+    <div class="modal-footer">
+
+    </div>
+</footer>
+</body>
+
+</html>

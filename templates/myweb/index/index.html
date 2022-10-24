@@ -1,0 +1,155 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>交友论坛首页</title>
+    <meta name="description" content="前端首页展示，包括登录、注册"/>
+    <meta name="keywords" content="交友论坛"/>
+    <link rel="stylesheet" href="{% static 'myweb/index/css/index.css' %}">
+</head>
+<body>
+<header style="position: relative;
+  width: 100%;
+  height: 560px;" id="header">
+    <div style="width: 100%;
+  height: 560px;
+  background: url('/static/banckground/1.jpg') no-repeat fixed center 0;
+  background-attachment: fixed;"></div>
+    <div style="color:rgba(236,229,87,0.91);position: absolute;top: 140px;left: 50%;font-size: 50px;width: 558px;margin-left: -279px;">
+        <p class="index-tex">登录、注册后进入论坛</p>
+    </div>
+</header>
+<div class="main">
+    <div class="main-inner">
+        <div class="main-list">
+            <div class="recommend-line">
+                <span>大家正在关注</span>
+            </div>
+            <div class="main-list__wrapper clearfix">
+                <a href="#"><img src="{% static 'myweb/index/images/cont/main-list__img1.jpg' %}"
+                                 alt="#"><span>旅游</span></a>
+                <a href="#"><img src="{% static 'myweb/index/images/cont/main-list__img2.jpg' %}"
+                                 alt="#"><span>艺术</span></a>
+                <a href="#"><img src="{% static 'myweb/index/images/cont/main-list__img3.jpg' %}"
+                                 alt="#"><span>运动</span></a>
+                <a href="#"><img src="{% static 'myweb/index/images/cont/main-list__img4.jpg' %}"
+                                 alt="#"><span>读书</span></a>
+                <a href="#"><img src="{% static 'myweb/index/images/cont/main-list__img5.jpg' %}"
+                                 alt="#"><span>乐器</span></a>
+                <a href="#"><img src="{% static 'myweb/index/images/cont/main-list__img6.jpg' %}"
+                                 alt="#"><span>拍照</span></a>
+                <a href="#"><img src="{% static 'myweb/index/images/cont/main-list__img7.jpg' %}"
+                                 alt="#"><span>游戏</span></a>
+            </div>
+        </div>
+        <div class="main-waterfall">
+            <div class="recommend-line">
+                <span>站内热文</span>
+            </div>
+            <div class="main-waterfall__wrapper">
+                <div class="main-waterfall__row clearfix">
+                    <div class="waterfall-imgbox waterfall-box"><a href="#"><img
+                            src="{% static 'myweb/index/images/cont/waterfall_imgA.jpg' %}" alt="#"></a></div>
+                    <div class="waterfall-box">
+                        <div class="waterfall-info waterfall-info__top">
+                            <h3><a href="#">最新科技咨询</a></h3>
+                            <span>国家知识产权分析评议服务示范创建机构,背靠中国科学院科研仪器设备、科技成果和专家人才资源,综合应用科技</span><br>
+                            <span>来自<a href="#">admin</a></span>
+                            <i class="info-arrow info-arrow__left"></i>
+                        </div>
+                        <div class="waterfall-info waterfall-info__bom">
+                            <h3><a href="#">中国古代乐器《一弦琴》</a></h3>
+                            <span>古琴的一种。 晋 王嘉 《拾遗记·殷汤》</span><br>
+                            <span>来自<a href="#">user1</a></span>
+                            <i class="info-arrow info-arrow__right"></i>
+                        </div>
+                    </div>
+                    <div class="waterfall-imgbox waterfall-box"><a href="#"><img
+                            src="{% static 'myweb/index/images/cont/waterfall_imgB.jpg' %}" alt="#"></a></div>
+                    <div class="waterfall-imgbox waterfall-box">
+                        <a href="#"><img src="{% static 'myweb/index/images/cont/waterfall_imgC.jpg' %}" alt="#"></a>
+                        <div class="waterfall-collect">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div style="display: block;
+              padding: 10px;
+              text-align: center;
+              margin: 0 auto;
+              width: 49%;
+              font-size: 20px;
+              color: #ffffff;
+              background-color: #af1c09;">
+                <a href="{% url 'myweb_index_login' %}">点击登录进入本站</a>
+            </div>
+            <div style="display: block;
+              padding: 10px;
+              text-align: center;
+              margin: 0 auto;
+              width: 49%;
+              font-size: 20px;
+              color: #00ff0d;
+              background-color: #00ff3c;">
+                <a href="{% url 'myweb_index_register' %}">点击注册账号</a>
+            </div>
+        </div>
+        <div class="main-category">
+            <div class="head clearfix">
+                <span>分类浏览</span>
+            </div>
+            <div class="cont clearfix">
+                <ul class="main-category__group">
+                    <li class="item"><a href="#">运动</a></li>
+                    <li class="item"><a href="#">旅游</a></li>
+                    <li class="item"><a href="#">影视</a></li>
+                </ul>
+                <ul class="main-category__group">
+                    <li class="item"><a href="#">工作</a></li>
+                    <li class="item"><a href="#">英语学习</a></li>
+                    <li class="item"><a href="#">国外旅游</a></li>
+                </ul>
+                <ul class="main-category__group">
+                    <li class="item"><a href="#">读书</a></li>
+                    <li class="item"><a href="#">情感分析</a></li>
+                    <li class="item"><a href="#">星座运势</a></li>
+
+                </ul>
+                <ul class="main-category__group">
+                    <li class="item"><a href="#">乐器</a></li>
+                    <li class="item"><a href="#">游戏</a></li>
+                    <li class="item"><a href="#">智力</a></li>
+                </ul>
+                <ul class="main-category__group">
+                    <li class="item"><a href="#">拍照</a></li>
+                    <li class="item"><a href="#">书法</a></li>
+                    <li class="item"><a href="#">等等</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer style="width: 100%;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    color: #999;
+    background-color: #000;">
+
+    <div style="width: 100%;
+    height: 80px;
+    line-height: 60px;
+    text-align: center;
+    color: #d2c3c3;
+    background-color: rgba(59,87,199,0.51);">
+        <p>南开大学滨海学院毕业设计</p>
+    </div>
+</footer>
+
+<script src="{% static 'myweb/index/js/jquery.js' %}"></script>
+<script src="{% static 'myweb/index/js/script.js' %}"></script>
+
+</body>
+</html>
